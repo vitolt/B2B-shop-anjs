@@ -1,0 +1,95 @@
+<nav>
+  <div class="nav-wrapper white m12 l12 ">
+    <ul class="left">
+      <li><a (click)="viewToList()" ><i class="material-icons light-blue-text">view_list</i></a></li>
+      <li><a (click)="viewToCards()"><i class="material-icons light-blue-text">view_module</i></a></li>
+      <li>  <nav class="z-depth-0 white light-blue-text">
+        <div class="nav-wrapper">
+          <form>
+            <div class="input-field  light-blue-text">
+              <input id="search" type="search" required class="light-blue-text">
+              <label class="label-icon" for="search"><i class="material-icons light-blue-text">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+        </div>
+      </nav>
+      </li>
+    </ul>
+    <ul class="right"><li><app-cart-state></app-cart-state></li></ul>
+  </div>
+</nav>
+
+<div *ngIf="isViewList(); then viewList else viewCards"></div>
+<ng-template #viewList>
+  <div class=".container">
+    <div class="row grey lighten-2">
+      <div class="col s5 m5"><h5>Наименование</h5></div>
+      <div class="col m1 hide-on-small-only center"><h5>РнД</h5></div>
+      <div class="col m1 hide-on-small-only center"><h5>Нов</h5></div>
+      <div class="col m1 hide-on-small-only center"><h5>СПб</h5></div>
+      <div class="col s3 m2 center"><h5>Цена</h5></div>
+      <div class="col s4 m2 center"><h5>Заказ</h5></div>
+    </div>
+    <div class=".container">
+        <div class="row hoverable valign-wrapper"  *ngFor="let priceElem of priceList.elements; let id = index;">
+            <div class="col s5 m5"><span>{{priceElem.product}}</span></div>
+            <div class="col m1 hide-on-small-only center"><span>{{priceElem.rnd_stock}}</span></div>
+            <div class="col m1 hide-on-small-only center"><span>{{priceElem.nvr_stock}}</span></div>
+            <div class="col m1 hide-on-small-only center"><span>{{priceElem.spb_stock}}</span></div>
+            <div class="col s3 m2 center"><span>{{priceElem.price}} р.</span></div>
+            <div class="col s2 m1 center">
+              <app-price-elem [priceElem]="priceElem"></app-price-elem>
+            </div>
+            <div class="col s2 m1 center"><a class="btn-small"><i class="material-icons">add_shopping_cart</i></a></div>
+        </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #viewCards>
+  <div class=".container">
+    <div class="row">
+      <div class="col s12 m6 l4" *ngFor="let priceElem of priceList.elements; let id = index;">
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="circle responsive-img"  src="http://dakar61-b2b.ru/image/cache/catalog/product_images/1671_51900-228x228.jpg">
+          </div>
+          <div class="card-title center activator ">
+            {{priceElem.product}}<i class="material-icons right">more_vert</i>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">{{priceElem.product}}<i class="material-icons right">close</i></span>
+            <div class="card-image waves-effect waves-block waves-light">
+              <img class="circle" src="http://dakar61-b2b.ru/image/cache/catalog/product_images/1671_51900-228x228.jpg">
+            </div>
+          </div>
+          <div class="card-content">
+            <div class=".container">
+              <div class="row">
+                <div class="col s12"><b>Остатки</b></div>
+              </div>
+              <div class="row">
+                <div class="col s4 center">РнД</div>
+                <div class="col s4 center">НВР</div>
+                <div class="col s4 center">СПб</div>
+              </div>
+              <div class="row">
+                <div class="col s4 center">{{priceElem.rnd_stock}}</div>
+                <div class="col s4 center">{{priceElem.nvr_stock}}</div>
+                <div class="col s4 center">{{priceElem.spb_stock}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action ">
+            <div class="row valign-wrapper">
+              <div class="col s6 center"> <h5>{{priceElem.price}} р.</h5></div>
+              <div class="col s3 center"><app-price-elem [priceElem]="priceElem"></app-price-elem> </div>
+              <div class="col s3 right-align"><a class="btn"><i class="material-icons">add_shopping_cart</i></a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
